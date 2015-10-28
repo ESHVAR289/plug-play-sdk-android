@@ -133,26 +133,29 @@ public class AddMoneyFragment extends Fragment {
                     }
                     if (addMoneyNPay) {
                         if (amountDouble < (payAmount-walletBalance)) {
-                            Snackbar.make(root, getString(R.string.less_amount_msg), Snackbar
-                                    .LENGTH_SHORT).show();
+                            Snackbar.make(root, getString(R.string.less_amount_msg),Snackbar.LENGTH_SHORT).show();
+                            Utils.hideKeyboard(getActivity());
                             amountEt.requestFocus();
                         }else{
-                            mListener.navigateTo(AddMoneyOptionsFragment.newInstance(addMoneyNPay, amount), UIConstants.SCREEN_MONEY_OPTION);
+                            mListener.navigateTo(AddMoneyOptionsFragment.newInstance(addMoneyNPay,amount), UIConstants.SCREEN_MONEY_OPTION);
                         }
                     }else{
-                        mListener.navigateTo(AddMoneyOptionsFragment.newInstance(addMoneyNPay, amount), UIConstants.SCREEN_MONEY_OPTION);
+                        mListener.navigateTo(AddMoneyOptionsFragment.newInstance(addMoneyNPay,amount), UIConstants.SCREEN_MONEY_OPTION);
                     }
                 } catch (NumberFormatException e) {
-                    Logger.e("NumberFormatException" + e.getStackTrace());
-                    Snackbar.make(root, getString(R.string.valid_amount_msg), Snackbar.LENGTH_SHORT).show();
+                    Logger.e("NumberFormatException"+e.getStackTrace());
+                    Snackbar.make(root, getString(R.string.valid_amount_msg),Snackbar.LENGTH_SHORT).show();
+                    Utils.hideKeyboard(getActivity());
                     amountEt.requestFocus();
                 }
             }else{
                 Snackbar.make(root, R.string.excess_amount_msg, Snackbar.LENGTH_SHORT).show();
+                Utils.hideKeyboard(getActivity());
                 amountEt.requestFocus();
             }
         }else{
-            Snackbar.make(root, "Please enter amount first.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(root,getString(R.string.err_enter_amount),Snackbar.LENGTH_SHORT).show();
+            Utils.hideKeyboard(getActivity());
             amountEt.requestFocus();
         }
     }
@@ -184,13 +187,13 @@ public class AddMoneyFragment extends Fragment {
 
     private void showWalletDetails(Amount amount) {
 //        walletTextView.setText(getString(R.string.rs) + " " + amount.getValue());
-        mListener.showWalletBalance(amount.getValue());
         try {
             walletBalance = Double.parseDouble(amount.getValue());
         } catch (NumberFormatException e) {
             walletBalance = 0F;
             Logger.e(TAG + " NumberFormatException ", e);
         }
+        mListener.showWalletBalance(String.format("%.1f", walletBalance));
         if(addMoneyNPay){
             if (Double.parseDouble(mListener.getAmount())>walletBalance) {
                 amountEt.setText(Double.toString(Double.parseDouble(mListener.getAmount()) -
@@ -222,7 +225,7 @@ public class AddMoneyFragment extends Fragment {
                 orgAmount = Double.parseDouble(orignalAmount);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                Snackbar.make(root, getString(R.string.valid_amount_msg), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(root, getString(R.string.valid_amount_msg),Snackbar.LENGTH_SHORT).show();
                 amountEt.requestFocus();
             }
         }
@@ -231,7 +234,7 @@ public class AddMoneyFragment extends Fragment {
             if (totalAmount > UIConstants.MAX_WALLET_AMOUNT_RECHARGE) {
                 totalAmount = UIConstants.MAX_WALLET_AMOUNT_RECHARGE;
             }
-            amountEt.setText(Double.toString(totalAmount));
+            amountEt.setText(Integer.toString((int)totalAmount));
             amountEt.setSelection(amountEt.getText().length());
         }
     }

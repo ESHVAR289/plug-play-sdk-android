@@ -107,11 +107,12 @@ public class CitrusUIActivity extends BaseActivity  {
             @Override
             public void success(Boolean success) {
                 if(success){
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.container,new WalletScreenFragment()).addToBackStack
-                            (null).commit();
-                    screenStack.add(UIConstants.SCREEN_WALLET);
-                    setActionBarTitle(UIConstants.SCREEN_WALLET);
+//                    FragmentManager fragmentManager = getSupportFragmentManager();
+//                    fragmentManager.beginTransaction().replace(R.id.container,new WalletScreenFragment()).addToBackStack
+//                            (null).commit();
+//                    screenStack.add(UIConstants.SCREEN_WALLET);
+//                    setActionBarTitle(UIConstants.SCREEN_WALLET);
+                    navigateTo(new WalletScreenFragment(),UIConstants.SCREEN_WALLET);
                 }else{
                     Intent intent = new Intent(context, LoginFlowActivity.class);
                     intent.putExtra(CitrusFlowManager.KEY_EMAIL,email);
@@ -274,7 +275,7 @@ public class CitrusUIActivity extends BaseActivity  {
         if(screenStack.get(screenStack.size()-1) == UIConstants.SCREEN_CVV){
             animateActionbarColor(AnimationType.ANIM_REVERSE);
         }
-        screenStack.add(UIConstants.SCREEN_RESULT);
+//        screenStack.add(UIConstants.SCREEN_RESULT);
 //        setActionBarTitle(UIConstants.SCREEN_RESULT);
         if(result){
             payAmount = "0";

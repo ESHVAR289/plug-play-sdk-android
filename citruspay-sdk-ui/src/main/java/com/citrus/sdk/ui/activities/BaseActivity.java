@@ -42,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity  implements Fragmen
     protected String email = "" ,mobile = "", payAmount = "0";
     protected ArrayList<Integer> screenStack = new ArrayList<Integer>();
     protected ProgressDialog mProgressDialog = null;
+    //This is set to true if you are retrying payment.
     public boolean retry = false;
     int  theme = -1;
     public boolean isNewUser = false;
@@ -84,7 +85,8 @@ public abstract class BaseActivity extends AppCompatActivity  implements Fragmen
         SpannableString s = new SpannableString(title);
 //        s.setSpan(new TypefaceSpan(this, "Raleway-SemiBold.ttf"), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        s.setSpan(new ForegroundColorSpan(UIConstants.actionBarItemColor),0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        s.setSpan(new ForegroundColorSpan(UIConstants.actionBarItemColor), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 // Update the action bar title with the TypefaceSpan instance
         getSupportActionBar().setTitle(s);
     }

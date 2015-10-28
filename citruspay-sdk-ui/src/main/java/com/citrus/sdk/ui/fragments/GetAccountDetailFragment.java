@@ -37,11 +37,11 @@ public class GetAccountDetailFragment extends Fragment {
     private String mParam2;
     View layout;
     private FragmentCallbacks mListener;
-    private android.widget.EditText ownerNameEt;
-    private android.widget.EditText accountNoEt;
-    private android.widget.EditText ifscCodeEt;
-    private android.widget.EditText amountEt;
-    private com.citrus.sdk.ui.widgets.CitrusButton buttonWithdrawMoney;
+    private EditText ownerNameEt;
+    private EditText accountNoEt;
+    private EditText ifscCodeEt;
+    private EditText amountEt;
+    private CitrusButton buttonWithdrawMoney;
     CashoutInfo cashoutInfo;
     String ownerName,accountNumber,ifscCode,withdrawAmount;
 

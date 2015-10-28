@@ -184,14 +184,15 @@ public class ResultFragment extends Fragment {
         layout.findViewById(R.id.setup_wallet_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CitrusFlowManager.startWalletFlow(getActivity(),mListener.getEmail(),mListener.getMobile());
+                CitrusFlowManager.startWalletFlowStyle(getActivity(), mListener.getEmail(),
+                        mListener.getMobile(), mListener.getStyle());
                 getActivity().finish();
             }
         });
         layout.findViewById(R.id.go_to_wallet_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CitrusFlowManager.startWalletFlow(getActivity(),mListener.getEmail(),mListener.getMobile());
+                CitrusFlowManager.startWalletFlowStyle(getActivity(),mListener.getEmail(),mListener.getMobile(),mListener.getStyle());
                 getActivity().finish();
             }
         });

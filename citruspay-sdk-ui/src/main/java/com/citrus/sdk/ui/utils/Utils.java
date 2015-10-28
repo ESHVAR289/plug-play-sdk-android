@@ -31,6 +31,7 @@ public class Utils {
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String IFSC_PATTERN="[A-Z|a-z]{4}[0][\\d|\\w]{6}$";
+    private static final String PHONE_PATTERN = "^[987]\\d{9}$";
 
     public static String getFormattedCardNumber(String cardNumber) {
         if (!TextUtils.isEmpty(cardNumber) && cardNumber.length() == 16) {
@@ -133,9 +134,27 @@ public class Utils {
     }
 
     public static boolean isValidWithdrawAmount(String stringWithdrawAmount)
-
     {
-        int amt=Integer.parseInt(stringWithdrawAmount);
-        return amt <= 5000 && amt >= 1;
+        if(!TextUtils.isEmpty(stringWithdrawAmount)) {
+            try {
+                if (!stringWithdrawAmount.contains(".")) {
+                    int amt = Integer.parseInt(stringWithdrawAmount);
+                    return amt <= 5000 && amt >= 1;
+                }else{
+                    float amt = Float.parseFloat(stringWithdrawAmount);
+                    return amt <= 5000 && amt >= 1;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public static boolean isValidPhone(String phone) {
+        Pattern pattern = Pattern.compile(PHONE_PATTERN);
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches();
     }
 }
