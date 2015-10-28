@@ -44,13 +44,17 @@ public class CitrusFlowManager {
                     .LENGTH_SHORT).show();
         }
         else if(!Utils.isValidEmail(email)){
-            Toast.makeText(context, "Email address is not valid", Toast
+            Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
                     .LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(phone) || phone.length() != 10) {
+        else if (TextUtils.isEmpty(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
                     .LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
+        }
+        else if (!Utils.isValidPhone(phone)) {
+            Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
+                    .LENGTH_SHORT).show();
+        }  else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
             Toast.makeText(context, context.getString(R.string.err_amount_empty), Toast
                     .LENGTH_SHORT).show();
 
@@ -81,13 +85,17 @@ public class CitrusFlowManager {
                     .LENGTH_SHORT).show();
         }
         else if(!Utils.isValidEmail(email)){
-            Toast.makeText(context, "Email address is not valid", Toast
+            Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
                     .LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(phone) || phone.length() != 10) {
+        else if (TextUtils.isEmpty(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
                     .LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
+        }
+        else if (!Utils.isValidPhone(phone)) {
+            Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
+                    .LENGTH_SHORT).show();
+        }  else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
             Toast.makeText(context, context.getString(R.string.err_amount_empty), Toast
                     .LENGTH_SHORT).show();
 
@@ -115,16 +123,45 @@ public class CitrusFlowManager {
                     .LENGTH_SHORT).show();
         }
         else if(!Utils.isValidEmail(email)){
-            Toast.makeText(context, "Email address is not valid", Toast
+            Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
                     .LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(phone) || phone.length() != 10) {
+        else if (TextUtils.isEmpty(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
+                    .LENGTH_SHORT).show();
+        }
+        else if (!Utils.isValidPhone(phone)) {
+            Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
                     .LENGTH_SHORT).show();
         } else if (context != null) {
             Intent intent = new Intent(context, CitrusUIActivity.class);
             intent.putExtra(KEY_EMAIL, email);
             intent.putExtra(KEY_MOBILE, phone);
+            intent.putExtra(KEY_FLOW, UIConstants.WALLET_FLOW);
+            context.startActivity(intent);
+        }
+    }
+    public static void startWalletFlowStyle(Context context, String email, String phone, int style) {
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(context, context.getString(R.string.err_email_empty), Toast
+                    .LENGTH_SHORT).show();
+        }
+        else if(!Utils.isValidEmail(email)){
+            Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
+                    .LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
+                    .LENGTH_SHORT).show();
+        }
+        else if (!Utils.isValidPhone(phone)) {
+            Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
+                    .LENGTH_SHORT).show();
+        } else if (context != null) {
+            Intent intent = new Intent(context, CitrusUIActivity.class);
+            intent.putExtra(KEY_EMAIL, email);
+            intent.putExtra(KEY_MOBILE, phone);
+            intent.putExtra(KEY_STYLE, style);
             intent.putExtra(KEY_FLOW, UIConstants.WALLET_FLOW);
             context.startActivity(intent);
         }

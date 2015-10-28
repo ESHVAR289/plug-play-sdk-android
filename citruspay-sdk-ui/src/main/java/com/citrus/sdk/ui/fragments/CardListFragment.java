@@ -84,7 +84,7 @@ public class CardListFragment extends Fragment implements CardListAdapter.Delete
     private void getCardList() {
         Logger.d(TAG + " Getting card list");
         mListener.showProgressDialog(false, getString(R.string.loading_saved_cards));
-        CitrusClient.getInstance(getActivity()).getWallet(new com.citrus.sdk.Callback<List<PaymentOption>>() {
+        CitrusClient.getInstance(getActivity()).getWallet(new Callback<List<PaymentOption>>() {
             @Override
             public void success(List<PaymentOption> paymentOptions) {
 

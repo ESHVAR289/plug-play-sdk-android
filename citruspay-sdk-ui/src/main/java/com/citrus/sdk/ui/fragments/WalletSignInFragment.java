@@ -132,13 +132,10 @@ public class WalletSignInFragment extends Fragment {
                         .TERMS_COND_URL));
                 startActivity(browserIntent);*/
                 String status = String.valueOf(ConnectionManager.getNetworkClass(getActivity()));
-                if(status.equals("NOT_CONNECTED")||status.equals("UNKNOWN"))
-                {
+                if (status.equals("NOT_CONNECTED") || status.equals("UNKNOWN")) {
                     Snackbar.make(root, "Unable to connect to the network", Snackbar.LENGTH_SHORT)
                             .show();
-                }
-                else
-                {
+                } else {
                     mListener.displayTerms(getActivity());
                 }
 
@@ -155,7 +152,7 @@ public class WalletSignInFragment extends Fragment {
             String mobile = phoneNoET.getText().toString().trim();
 //            mobile = mobile.replace(UIConstants.PHONE_NUM_PREFIX_UI_FORMATTED,"");
             mListener.showProgressDialog(false, getString(R.string.text_searching_user));
-            citrusClient.isCitrusMember(email, mobile, getSigninCallback(email,mobile));
+            citrusClient.isCitrusMember(email, mobile, getSigninCallback(email, mobile));
         }
     }
 
@@ -181,21 +178,17 @@ public class WalletSignInFragment extends Fragment {
         String mobile = phoneNoET.getText().toString().trim();
         String email = emailAddressET.getText().toString().trim();
         if (TextUtils.isEmpty(mobile)) {
-            Snackbar.make(root, "Phone number is required", Snackbar.LENGTH_SHORT).show();
-            phoneNoET.requestFocus();
+            Snackbar.make(root, getString(R.string.err_phone_empty), Snackbar.LENGTH_SHORT).show();
             return false;
-        } else if (mobile.length() < (UIConstants.PHONE_NUM_MIN_LENGTH_INDIA + UIConstants
-                .PHONE_NUM_PREFIX_UI_FORMATTED.length())) {
-            Snackbar.make(root, "Please enter correct phone number", Snackbar.LENGTH_SHORT).show();
-            phoneNoET.requestFocus();
+        } else if (!Utils.isValidPhone(mobile.replace(UIConstants
+                .PHONE_NUM_PREFIX_UI_FORMATTED, ""))) {
+            Snackbar.make(root, getString(R.string.err_phone_not_valid), Snackbar.LENGTH_SHORT).show();
             return false;
         } else if (TextUtils.isEmpty(email)) {
-            Snackbar.make(root, "Email address is required", Snackbar.LENGTH_SHORT).show();
-            emailAddressET.requestFocus();
+            Snackbar.make(root, getString(R.string.err_email_empty), Snackbar.LENGTH_SHORT).show();
             return false;
         } else if (!Utils.isValidEmail(email)) {
-            Snackbar.make(root, "Email address is not valid", Snackbar.LENGTH_SHORT).show();
-            emailAddressET.requestFocus();
+            Snackbar.make(root, getString(R.string.email_not_valid), Snackbar.LENGTH_SHORT).show();
             return false;
         } else {
 
@@ -216,9 +209,10 @@ public class WalletSignInFragment extends Fragment {
             spannable = new SpannableString(UIConstants.PHONE_NUM_PREFIX_UI_FORMATTED);
         }
         spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color
-                .citrus_label_color)), 0, UIConstants.PHONE_NUM_PREFIX_UI_FORMATTED.length(),
+                        .citrus_label_color)), 0, UIConstants.PHONE_NUM_PREFIX_UI_FORMATTED
+                        .length(),
                 Spannable
-                .SPAN_EXCLUSIVE_EXCLUSIVE);
+                        .SPAN_EXCLUSIVE_EXCLUSIVE);
         Selection.setSelection(phoneNoET.getText(), phoneNoET.getText().length());
         phoneNoET.setText(spannable);
     }

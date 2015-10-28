@@ -38,14 +38,14 @@ public class OTPConfirmationFragment extends Fragment {
 
     private String userEmail;
     private String userMobile;
-    private android.widget.EditText mobileOtpEt;
-    private android.widget.LinearLayout mobileOtpContainer;
-    private android.widget.EditText emailOtpEt;
-    private android.widget.EditText citrusPassEt;
-    private android.widget.TextView secondaryText;
-    private android.widget.TextView primaryText;
-    private android.widget.TextView forgotPasswordView;
-    private android.widget.LinearLayout emailOtpContainer;
+    private EditText mobileOtpEt;
+    private LinearLayout mobileOtpContainer;
+    private EditText emailOtpEt;
+    private EditText citrusPassEt;
+    private TextView secondaryText;
+    private TextView primaryText;
+    private TextView forgotPasswordView;
+    private LinearLayout emailOtpContainer;
     View root;
     private FragmentCallbacks mListener;
 

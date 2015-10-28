@@ -429,7 +429,7 @@ public class QuickPayFragment extends Fragment {
             if (showLoading) {
                 showDialog(getString(R.string.load_wallet_details), false);
             }
-            citrusClient.getWallet(new com.citrus.sdk.Callback<List<PaymentOption>>() {
+            citrusClient.getWallet(new Callback<List<PaymentOption>>() {
                 @Override
                 public void success(List<PaymentOption> paymentOptions) {
 
@@ -597,7 +597,7 @@ public class QuickPayFragment extends Fragment {
     private void linkUser() {
         Logger.d(TAG + " linkUser");
         showDialog(getString(R.string.linking_user), false);
-        citrusClient.isCitrusMember(email, mobile, new com.citrus.sdk.Callback<Boolean>() {
+        citrusClient.isCitrusMember(email, mobile, new Callback<Boolean>() {
 
             @Override
             public void success(Boolean aBoolean) {

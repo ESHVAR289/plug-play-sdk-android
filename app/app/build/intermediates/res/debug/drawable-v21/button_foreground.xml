@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="rectangle">
+
+    <solid android:color="?attr/colorButtonNormal"/>
+    <corners android:radius="2dp"/>
+
+
+</shape><!-- From: file:/Users/akshaykoul/citrus-sdk/citruspay-sdk-ui/src/main/res/drawable-v21/button_foreground.xml --><!-- From: file:/Users/akshaykoul/citrus-sdk/app/build/intermediates/exploded-aar/citrus-sdk/citruspay-sdk-ui/unspecified/res/drawable-v21/button_foreground.xml -->

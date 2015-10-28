@@ -178,8 +178,7 @@ public class AddMoneyOptionsFragment extends Fragment {
     private void getWallet() {
         if (isAdded()) {
             mListener.showProgressDialog(false, getString(R.string.load_wallet_details));
-            CitrusClient.getInstance(getActivity()).getWallet(new com.citrus.sdk
-                    .Callback<List<PaymentOption>>
+            CitrusClient.getInstance(getActivity()).getWallet(new Callback<List<PaymentOption>>
                     () {
                 @Override
                 public void success(List<PaymentOption> paymentOptions) {

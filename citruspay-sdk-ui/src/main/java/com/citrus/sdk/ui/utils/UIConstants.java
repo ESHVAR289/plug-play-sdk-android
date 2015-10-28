@@ -6,8 +6,8 @@ import android.graphics.Color;
  * Created by akshaykoul on 5/29/15.
  */
 public class UIConstants {
-    public static final java.lang.String PHONE_NUM_PREFIX_UI_FORMATTED = "+91- ";
-    public static final java.lang.String PHONE_NUM_PREFIX = "+91";
+    public static final String PHONE_NUM_PREFIX_UI_FORMATTED = "+91- ";
+    public static final String PHONE_NUM_PREFIX = "+91";
     public static final int PHONE_NUM_MIN_LENGTH_INDIA = 10;
     public static final int DISPLAY_PAYMENT_OPTIONS = 1;
     public static int actionBarItemColor = Color.BLACK;

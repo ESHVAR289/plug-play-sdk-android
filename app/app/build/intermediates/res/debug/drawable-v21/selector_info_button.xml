@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="?attr/colorPrimary">
+    <item android:drawable="@drawable/ic_info_normal" />
+</ripple><!-- From: file:/Users/akshaykoul/citrus-sdk/citruspay-sdk-ui/src/main/res/drawable-v21/selector_info_button.xml --><!-- From: file:/Users/akshaykoul/citrus-sdk/app/build/intermediates/exploded-aar/citrus-sdk/citruspay-sdk-ui/unspecified/res/drawable-v21/selector_info_button.xml -->
