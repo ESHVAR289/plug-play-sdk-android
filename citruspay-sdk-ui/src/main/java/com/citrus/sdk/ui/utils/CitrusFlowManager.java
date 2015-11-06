@@ -1,24 +1,30 @@
 package com.citrus.sdk.ui.utils;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.citrus.sdk.Callback;
 import com.citrus.sdk.CitrusClient;
+import com.citrus.sdk.Constants;
 import com.citrus.sdk.Environment;
 import com.citrus.sdk.response.CitrusError;
 import com.citrus.sdk.response.CitrusResponse;
 import com.citrus.sdk.ui.R;
 import com.citrus.sdk.ui.activities.CitrusUIActivity;
 
+import java.util.logging.Logger;
+
 /**
  * Created by akshaykoul on 5/28/15.
  */
 public class CitrusFlowManager {
 
+    public static final String TAG = "CitrusFlowManager";
     public static final String KEY_EMAIL = "key_email";
     public static final String KEY_MOBILE = "key_mobile";
     public static final String KEY_FLOW = "key_flow";
@@ -26,7 +32,6 @@ public class CitrusFlowManager {
     public static final String KEY_STYLE = "key_style";
     public static String billGenerator = "";
     public static String returnURL = "";
-
     /**
      * Start the shopping flow with style parameter.
      *
@@ -65,7 +70,11 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_FLOW, UIConstants.QUICK_PAY_FLOW);
             intent.putExtra(KEY_AMOUNT, amount);
             intent.putExtra(KEY_STYLE, style);
-            context.startActivity(intent);
+            if(context instanceof Activity) {
+                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
+            } else {
+                Log.d(TAG, "Context passed should be activity context");
+            }
         }
 
     }
@@ -105,7 +114,11 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_MOBILE, phone);
             intent.putExtra(KEY_FLOW, UIConstants.QUICK_PAY_FLOW);
             intent.putExtra(KEY_AMOUNT, amount);
-            context.startActivity(intent);
+            if(context instanceof Activity) {
+                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
+            } else {
+                Log.d(TAG, "Context passed should be activity context");
+            }
         }
 
     }
@@ -138,7 +151,11 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_EMAIL, email);
             intent.putExtra(KEY_MOBILE, phone);
             intent.putExtra(KEY_FLOW, UIConstants.WALLET_FLOW);
-            context.startActivity(intent);
+            if(context instanceof Activity) {
+                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
+            } else {
+                Log.d(TAG, "Context passed should be activity context");
+            }
         }
     }
     public static void startWalletFlowStyle(Context context, String email, String phone, int style) {
@@ -163,7 +180,11 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_MOBILE, phone);
             intent.putExtra(KEY_STYLE, style);
             intent.putExtra(KEY_FLOW, UIConstants.WALLET_FLOW);
-            context.startActivity(intent);
+            if(context instanceof Activity) {
+                ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
+            } else {
+                Log.d(TAG, "Context passed should be activity context");
+            }
         }
     }
 
