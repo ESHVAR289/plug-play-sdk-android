@@ -28,7 +28,7 @@ import com.orhanobut.logger.Logger;
 public class ResultFragment extends Fragment {
 
     private static final String ARG_IS_SUCCESS = "is_success";
-    private static final String ARG_RESULT = "result";
+    public static final String ARG_RESULT = "result";
     private static final String TAG = "ResultFragment$";
     ImageView paymentResultImage;
     CitrusTextView paymentResultText;

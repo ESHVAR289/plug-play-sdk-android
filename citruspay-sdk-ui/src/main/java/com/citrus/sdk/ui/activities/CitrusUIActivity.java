@@ -106,20 +106,20 @@ public class CitrusUIActivity extends BaseActivity  {
         citrusClient.isUserSignedIn(new Callback<Boolean>() {
             @Override
             public void success(Boolean success) {
-                if(success){
+                if (success) {
 //                    FragmentManager fragmentManager = getSupportFragmentManager();
 //                    fragmentManager.beginTransaction().replace(R.id.container,new WalletScreenFragment()).addToBackStack
 //                            (null).commit();
 //                    screenStack.add(UIConstants.SCREEN_WALLET);
 //                    setActionBarTitle(UIConstants.SCREEN_WALLET);
-                    navigateTo(new WalletScreenFragment(),UIConstants.SCREEN_WALLET);
-                }else{
+                    navigateTo(new WalletScreenFragment(), UIConstants.SCREEN_WALLET);
+                } else {
                     Intent intent = new Intent(context, LoginFlowActivity.class);
-                    intent.putExtra(CitrusFlowManager.KEY_EMAIL,email);
-                    intent.putExtra(CitrusFlowManager.KEY_MOBILE,mobile);
-                    intent.putExtra(CitrusFlowManager.KEY_STYLE,theme);
+                    intent.putExtra(CitrusFlowManager.KEY_EMAIL, email);
+                    intent.putExtra(CitrusFlowManager.KEY_MOBILE, mobile);
+                    intent.putExtra(CitrusFlowManager.KEY_STYLE, theme);
                     if (!TextUtils.isEmpty(payAmount)) {
-                        intent.putExtra(CitrusFlowManager.KEY_AMOUNT,payAmount);
+                        intent.putExtra(CitrusFlowManager.KEY_AMOUNT, payAmount);
                     }
                     startActivityForResult(intent, UIConstants.REQ_CODE_LOGIN);
                 }
@@ -127,7 +127,7 @@ public class CitrusUIActivity extends BaseActivity  {
 
             @Override
             public void error(CitrusError error) {
-                if (context!=null) {
+                if (context != null) {
                     Snackbar.make(findViewById(R.id.container), "could not get login status " + error.getMessage(), Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -147,6 +147,7 @@ public class CitrusUIActivity extends BaseActivity  {
 
     @Override
     public void onWalletTransactionComplete(ResultModel resultModel) {
+        setDataToSendBackToParentActivity(new Intent().putExtra(ResultFragment.ARG_RESULT,resultModel));
         Utils.getBalance(context);
         processAndShowResult(resultModel);
     }
@@ -163,13 +164,17 @@ public class CitrusUIActivity extends BaseActivity  {
         return mobile;
     }
 
+    public void setDataToSendBackToParentActivity(Intent data) {
+        context.setResult(RESULT_OK,data);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK) {
             TransactionResponse transactionResponse = data.getParcelableExtra(Constants.INTENT_EXTRA_TRANSACTION_RESPONSE);
+            context.setResult(RESULT_OK,data);
             processAndShowResult(new ResultModel(null, transactionResponse));
-        }else if(requestCode == UIConstants.REQ_CODE_LOGIN){
+        } else if(requestCode == UIConstants.REQ_CODE_LOGIN){
             if (resultCode == RESULT_OK) {
                 Logger.d(TAG+" Login successful");
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -180,6 +185,10 @@ public class CitrusUIActivity extends BaseActivity  {
             }else{
                 finish();
             }
+        }
+        if(requestCode == Constants.REQUEST_CODE_PAYMENT) { // Even though its failure send data
+        // back
+            context.setResult(RESULT_OK,data);
         }
     }
 
