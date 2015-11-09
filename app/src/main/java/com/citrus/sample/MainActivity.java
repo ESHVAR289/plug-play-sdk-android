@@ -14,8 +14,6 @@ import com.citrus.sdk.ui.utils.CitrusFlowManager;
 import com.citrus.sdk.ui.utils.ResultModel;
 import com.crashlytics.android.Crashlytics;
 
-import java.util.logging.Logger;
-
 import io.fabric.sdk.android.Fabric;
 
 
@@ -122,12 +120,18 @@ public class MainActivity extends BaseActivity {
         Log.d("MainActivity","request code " + requestCode + " resultcode " + resultCode);
         if(requestCode == Constants.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data !=
                 null) {
+            // You will get data here if transaction flow is started through pay options other than wallet
             TransactionResponse transactionResponse = data.getParcelableExtra(Constants
                     .INTENT_EXTRA_TRANSACTION_RESPONSE);
+            // You will get data here if transaction flow is started through wallet
             ResultModel resultModel = data.getParcelableExtra(ResultFragment.ARG_RESULT);
+
+            // Check which object is non-null
             if(transactionResponse != null && transactionResponse.getJsonResponse() != null) {
+                // Decide what to do with this data
                 Log.d(TAG, "transaction response" + transactionResponse.getJsonResponse());
             } else if(resultModel != null && resultModel.getTransactionResponse() != null){
+                // Decide what to do with this data
                 Log.d(TAG, "result response" + resultModel.getTransactionResponse().getTransactionId());
             } else {
                 Log.d(TAG, "Both objects are null!");
