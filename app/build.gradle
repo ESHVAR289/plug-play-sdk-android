@@ -23,8 +23,8 @@ android {
         applicationId "com.citrus.sample"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 100
-        versionName "0.0.10.0"
+        versionCode 110
+        versionName "0.0.11.0"
     }
     buildTypes {
         release {
