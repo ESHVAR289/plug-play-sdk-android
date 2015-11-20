@@ -178,4 +178,5 @@
     <string name="err_enter_amount">Please enter amount first</string>
     <string name="email_not_valid">Email address is not valid</string>
     <string name="err_phone_not_valid">Phone no is not valid</string>
+    <string name="err_retry">There was an error. Please try again.</string>
 </resources>

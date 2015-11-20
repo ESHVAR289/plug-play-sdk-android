@@ -238,7 +238,12 @@ public class WalletSignInFragment extends Fragment {
 
             @Override
             public void error(CitrusError error) {
-
+                if(mListener != null) {
+                    mListener.dismissProgressDialog();
+                    if(root != null) {
+                        Snackbar.make(root, getString(R.string.err_retry), Snackbar.LENGTH_SHORT).show();
+                    }
+                }
             }
         };
     }
