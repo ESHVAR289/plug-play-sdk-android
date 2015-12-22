@@ -658,14 +658,9 @@ public class QuickPayFragment extends Fragment {
             payNowButton.setVisibility(View.GONE);
         }
         addMoneyNPay.setVisibility(View.VISIBLE);
-        walletAmount = amount.getValue();
-        if(walletAmount.equals(".0")){
-            walletAmount="0";
-            walletBalance.setText(getString(R.string.rs) + " " + walletAmount);
-        }
-        else{
-            walletBalance.setText(getString(R.string.rs) + " " + walletAmount.replace(".0",""));
-        }
+        walletAmount = Utils.getFormattedPriceValueOptionalTwoDecimal(amount.getValue());
+        walletBalance.setText(getString(R.string.rs) + " " + walletAmount);
+        Log.d(TAG,walletAmount);
 
         walletContainer.setVisibility(View.VISIBLE);
         setupWalletText.setVisibility(View.GONE);
