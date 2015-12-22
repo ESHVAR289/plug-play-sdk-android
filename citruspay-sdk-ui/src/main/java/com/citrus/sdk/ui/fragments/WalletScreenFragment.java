@@ -17,8 +17,6 @@ import com.citrus.sdk.ui.events.FragmentCallbacks;
 import com.citrus.sdk.ui.utils.UIConstants;
 import com.citrus.sdk.ui.utils.Utils;
 
-import java.text.DecimalFormat;
-
 import de.greenrobot.event.EventBus;
 
 
@@ -135,17 +133,9 @@ public class WalletScreenFragment extends Fragment {
 
     private void showWalletDetails(Amount amount) {
 
-        walletAmount = amount.getValue();
-        if(walletAmount.equals(".0"))
-        {
-            walletAmount="0";
-            Log.d(TAG,walletAmount);
-            walletTextView.setText(getString(R.string.rs) + " " + walletAmount);
-        }
-        else{
-            Log.d(TAG,walletAmount);
-            walletTextView.setText(getString(R.string.rs) + " " + walletAmount.replace(".0", ""));
-        }
+        walletAmount = Utils.getFormattedPriceValueOptionalTwoDecimal(amount.getValue());
+        walletTextView.setText(getString(R.string.rs) + " " + walletAmount);
+        Log.d(TAG,walletAmount);
 
     }
 }

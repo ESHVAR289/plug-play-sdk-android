@@ -17,6 +17,7 @@ import com.citrus.sdk.response.CitrusError;
 import com.citrus.sdk.ui.events.BalanceUpdateEvent;
 import com.orhanobut.logger.Logger;
 
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -156,5 +157,11 @@ public class Utils {
         Pattern pattern = Pattern.compile(PHONE_PATTERN);
         Matcher matcher = pattern.matcher(phone);
         return matcher.matches();
+    }
+
+    public static String getFormattedPriceValueOptionalTwoDecimal(String amount) {
+        Double value = Double.parseDouble(amount);
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        return decimalFormat.format(value);
     }
 }
