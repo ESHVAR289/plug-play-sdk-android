@@ -652,7 +652,7 @@ public class QuickPayFragment extends Fragment {
         float payAmount = Float.parseFloat(((CitrusUIActivity) getActivity())
                 .getPayAmount());
         float balance = Float.parseFloat(amount.getValue());
-        if (payAmount < balance) {
+        if (payAmount <= balance) {
             payNowButton.setVisibility(View.VISIBLE);
         } else {
             payNowButton.setVisibility(View.GONE);
