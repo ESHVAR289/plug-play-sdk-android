@@ -58,10 +58,10 @@ public class BankListAdapter extends BaseAdapter {
         }
         holder.bankName.setText(item.getBankName());
         holder.bankIcon.setImageDrawable(item.getOptionIcon(activity));
-        if(item.getPgHealth().equals(PGHealth.GOOD)){
-            holder.warnIcon.setVisibility(View.GONE);
-        }else{
+        if(item.getPgHealth().equals(PGHealth.BAD)){
             holder.warnIcon.setVisibility(View.VISIBLE);
+        }else{
+            holder.warnIcon.setVisibility(View.GONE);
         }
         holder.warnIcon.setOnClickListener(new View.OnClickListener() {
             @Override
