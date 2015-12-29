@@ -15,11 +15,42 @@
 
 package com.citrus.sdk.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by salil on 12/5/15.
  */
-public class CitrusError extends CitrusResponse {
+public class CitrusError extends CitrusResponse implements Parcelable {
     public CitrusError(String message, Status status) {
         super(message, status);
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.message);
+        dest.writeInt(this.status == null ? -1 : this.status.ordinal());
+    }
+
+    private CitrusError(Parcel in) {
+        this.message = in.readString();
+        int tmpStatus = in.readInt();
+        this.status = tmpStatus == -1 ? null : Status.values()[tmpStatus];
+    }
+
+    public static final Creator<CitrusError> CREATOR = new Creator<CitrusError>() {
+        public CitrusError createFromParcel(Parcel source) {
+            return new CitrusError(source);
+        }
+
+        public CitrusError[] newArray(int size) {
+            return new CitrusError[size];
+        }
+    };
 }

@@ -127,6 +127,7 @@ public class AddMoneyFragment extends Fragment {
         if (!TextUtils.isEmpty(amount)) {
             if (Utils.isValidWithdrawAmount(amount)) {
                 try {
+                    Utils.hideKeyboard(getActivity());
                     amountDouble = Double.parseDouble(amount);
                     if (!TextUtils.isEmpty(mListener.getAmount())) {
                         payAmount = Double.parseDouble(mListener.getAmount());
@@ -134,7 +135,6 @@ public class AddMoneyFragment extends Fragment {
                     if (addMoneyNPay) {
                         if (amountDouble < (payAmount-walletBalance)) {
                             Snackbar.make(root, getString(R.string.less_amount_msg),Snackbar.LENGTH_SHORT).show();
-                            Utils.hideKeyboard(getActivity());
                             amountEt.requestFocus();
                         }else{
                             mListener.navigateTo(AddMoneyOptionsFragment.newInstance(addMoneyNPay,amount), UIConstants.SCREEN_MONEY_OPTION);
