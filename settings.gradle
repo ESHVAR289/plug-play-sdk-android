@@ -1,1 +1,1 @@
-include ':app', ':citruspay-sdk-ui', ':citruslibrary'
+include ':app', ':citruspay-sdk-ui'
