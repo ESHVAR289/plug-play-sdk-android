@@ -19,7 +19,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity {
 
-    public static final String sandboxReturnURL = "https://salty-plateau-1529.herokuapp" +
+    public static final String returnUrlLoadMoney = "https://salty-plateau-1529.herokuapp" +
             ".com/redirectUrlLoadCash.php";
     public static final String sandboxBillGeneratorURL = "https://salty-plateau-1529.herokuapp" +
             ".com/billGenerator.sandbox.php";
@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity {
                 "c78ec84e389814a05d3ae46546d16d2e", "test-signin",
                 "52f7e15efd4208cf5345dd554443fd99", getResources().getColor(R.color.white),
                 MainActivity.this, Environment.SANDBOX, "prepaid", sandboxBillGeneratorURL,
-                sandboxReturnURL);
+                returnUrlLoadMoney);
     }
 
     @Override
