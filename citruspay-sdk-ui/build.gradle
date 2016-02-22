@@ -28,13 +28,12 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.orhanobut:logger:1.8'
-    compile 'com.google.android.gms:play-services-analytics:7.8.0'
     compile "com.facebook.conceal:conceal:1.0.1@aar"
 
     /* ********************************************
      **** Retrofit 1.9 or Not using retrofit ******
      **********************************************/
-    compile 'com.citrus.sdk:payment-sdk:3.3.2:retrofitoldRelease@aar'
+    compile 'com.citrus.sdk:payment-sdk:3.4.3:retrofitoldRelease@aar'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
