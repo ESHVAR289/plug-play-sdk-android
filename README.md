@@ -49,7 +49,7 @@ Integrate the Citrus SDK in your project by doing the following steps:
    * Import Module : citruspay-sdk-ui from the file downloaded from [github](https://github.com/citruspay/plug-play-sdk-android)
    * Add citruspay-sdk-ui module to dependencies
 
-Please refer below demo-video for easier initialization.
+Please refer below demonstration video for easier initialization.
 
 [![Plug-And-Play SDK Initialization demo](http://i.imgur.com/VkOQlyb.png?1)](https://player.vimeo.com/video/140033977 "Plug-And-Play SDK Initialization - Click to Watch!")
 
