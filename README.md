@@ -1,4 +1,4 @@
-# Citrus Plug-And-Play Android SDK
+# Plug And Play SDK Integration.
 
 Citrus SDK UI is an android Library project for easy integration of citrus pay library to your project. It provides all the screens necessary for making a transaction via citrus pay.
 
@@ -148,7 +148,7 @@ The theme fore these Activities are customizable but you have to add @style/Citr
 
 ```javascript
   CitrusFlowManager.startShoppingFlow(YourActivity.this,       
-    "developercitrus@mailinator.com", "9769507476", "5");
+    "developercitrus@mailinator.com", "8424019644", "5");
 ```
 
 ## Start Wallet Flow
@@ -166,7 +166,7 @@ The theme fore these Activities are customizable but you have to add @style/Citr
 **Sample :**
 ```javascript
   CitrusFlowManager.startWalletFlow(YourActivity.this, 
-        "developercitrus@mailinator.com", "9769507476");
+        "developercitrus@mailinator.com", "8424019644");
 ```
 
 
