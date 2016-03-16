@@ -80,9 +80,7 @@ you can get **Signup Id**, **Signup Secret**, **Signin Id**, **Signin** Secret a
     getResources().getColor(R.color.white),YourActivity.this,
     Environment.SANDBOX,”prepaid”, sandboxBillGeneratorURL , sandboxReturnURL);
 ```
-.markdown-here-wrapper > p:first-of-type {
-  color: red;
-}
+
 Before starting the Shopping flow or Wallet flow , you need to Add the following Activities in the your AndroidManifest
 
 **1. CitrusUIActivity **  
