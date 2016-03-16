@@ -1,4 +1,3 @@
-# Plug And Play SDK Integration.
 
 Citrus SDK UI is an android Library project for easy integration of citrus pay library to your project. It provides all the screens necessary for making a transaction via citrus pay.
 
@@ -27,14 +26,15 @@ Citrus SDK UI is an android Library project for easy integration of citrus pay l
 
 Make sure that you have the following parameters from Citrus.
 
-* Secret Key
-*     Access Key
-*     SignIn Key
-*     SignIn Secret
-*     SignUp Key
-*     SignUp Secret
-*     Bill Generator Hosted on your server.
-*     Redirect URL page hosted on your server. (After the transaction is complete, Citrus posts a response to this URL.) 
+* **Secret Key**
+*     **Access Key**
+*     **SignIn Key**
+*     **SignIn Secret**
+*     **SignUp Key**
+*     **SignUp Secret**
+*     **Bill Generator** Hosted on your server.
+*     **Redirect URL** page hosted on your server. (After the transaction is complete, Citrus posts a response to this URL.) 
+*     **Redirect URL-LoadCash** page hosted on your server (To handle LoadMoney response, refer this [link](https://github.com/citruspay/citrus-android-sdk/tree/master/backend-files))
 
 **Fetch the following details for either [Production](http://www.citruspay.com/) or [Sandbox](http://sandbox.citruspay.com/) before proceeding**
 
@@ -166,6 +166,5 @@ The theme fore these Activities are customizable but you have to add @style/Citr
   CitrusFlowManager.startWalletFlow(YourActivity.this, 
         "developercitrus@mailinator.com", "8424019644");
 ```
-
 
 
