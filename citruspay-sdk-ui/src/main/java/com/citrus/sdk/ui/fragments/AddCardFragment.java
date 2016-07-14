@@ -276,7 +276,7 @@ public class AddCardFragment extends Fragment {
                 "DEC",
         };
 
-        monthListMap = new HashMap<String, String>();
+        monthListMap = new HashMap<>();
         monthListMap.put("JAN", "01");
         monthListMap.put("FEB", "02");
         monthListMap.put("MAR", "03");

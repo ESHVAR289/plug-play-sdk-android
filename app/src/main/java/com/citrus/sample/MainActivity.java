@@ -2,13 +2,13 @@ package com.citrus.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
 import com.citrus.sdk.Constants;
-import com.citrus.sdk.Environment;
 import com.citrus.sdk.TransactionResponse;
 import com.citrus.sdk.ui.fragments.ResultFragment;
 import com.citrus.sdk.ui.utils.CitrusFlowManager;
@@ -20,16 +20,17 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity {
 
-
+    AppEnvironment appEnvironment;
     public static final String returnUrlLoadMoney = "https://salty-plateau-1529.herokuapp" +
             ".com/redirectUrlLoadCash.php";
-    public static final String sandboxBillGeneratorURL = "https://salty-plateau-1529.herokuapp" +
-            ".com/billGenerator.sandbox.php";
     public static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        appEnvironment = AppEnvironment.PRODUCTION;
+
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
@@ -39,10 +40,6 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 CitrusFlowManager.startShoppingFlow(MainActivity.this,
                         "developercitrus@mailinator.com", "9769507476", "5", false);
-//                CitrusFlowManager.startShoppingFlow(MainActivity.this, "akshay@leftshift.io",
-//                        "8605535811", "50");
-//                CitrusFlowManager.startShoppingFlow(MainActivity.this, "kaul.akshay17@gmail
-// .com", "8605535881","5");
             }
         });
         findViewById(R.id.custom_button).setOnClickListener(new View.OnClickListener() {
@@ -98,10 +95,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupCitrusConfigs() {
-        CitrusFlowManager.initCitrusConfig("test-signup",
-                "c78ec84e389814a05d3ae46546d16d2e", "test-signin",
-                "52f7e15efd4208cf5345dd554443fd99", getResources().getColor(R.color.white),
-                MainActivity.this, Environment.SANDBOX, "prepaid", sandboxBillGeneratorURL,
+        CitrusFlowManager.initCitrusConfig(appEnvironment.getSignUpId(),
+                appEnvironment.getSignUpSecret(), appEnvironment.getSignInId(),
+                appEnvironment.getSignInSecret(), ContextCompat.getColor(this, R.color.white),
+                MainActivity.this, appEnvironment.getEnvironment(), appEnvironment.getVanity(), appEnvironment.getBillUrl(),
                 returnUrlLoadMoney);
     }
 
