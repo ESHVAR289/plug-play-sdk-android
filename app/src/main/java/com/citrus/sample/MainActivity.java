@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appEnvironment = AppEnvironment.PRODUCTION;
+        appEnvironment = AppEnvironment.SANDBOX;
 
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
