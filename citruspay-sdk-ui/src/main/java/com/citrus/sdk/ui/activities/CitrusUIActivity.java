@@ -41,7 +41,7 @@ import com.citrus.sdk.ui.utils.Utils;
 import com.orhanobut.logger.Logger;
 
 
-public class CitrusUIActivity extends BaseActivity  {
+public class CitrusUIActivity extends BaseActivity {
     private int flow = 0;
     private TextView amountText;
     String balanceAmount = "";
@@ -49,55 +49,57 @@ public class CitrusUIActivity extends BaseActivity  {
     public LinearLayout balanceContainer;
     public static final String TAG = "CitrusActivity$";
     Activity context;
+    boolean isOverrideResultScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        theme = getIntent().getIntExtra(CitrusFlowManager.KEY_STYLE,-1);
-        if(theme != -1) {
+        theme = getIntent().getIntExtra(CitrusFlowManager.KEY_STYLE, -1);
+        if (theme != -1) {
             setTheme(theme);
         }
         super.onCreate(savedInstanceState);
         setSpannableTitle("Citrus UI");
         context = CitrusUIActivity.this;
+        Intent intent = getIntent();
         email = getIntent().getStringExtra(CitrusFlowManager.KEY_EMAIL);
         mobile = getIntent().getStringExtra(CitrusFlowManager.KEY_MOBILE);
         payAmount = getIntent().getStringExtra(CitrusFlowManager.KEY_AMOUNT);
         flow = getIntent().getIntExtra(CitrusFlowManager.KEY_FLOW, 0);
-        amountText =  (TextView)findViewById(R.id.amount_text);
-        balanceAmountText =  (TextView)findViewById(R.id.balance_amount);
-        balanceContainer =  (LinearLayout)findViewById(R.id.balance_container);
-        TypedValue typedValue = new  TypedValue();
+        amountText = (TextView) findViewById(R.id.amount_text);
+        balanceAmountText = (TextView) findViewById(R.id.balance_amount);
+        balanceContainer = (LinearLayout) findViewById(R.id.balance_container);
+        TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        final  int color = typedValue.data;
+        final int color = typedValue.data;
+        isOverrideResultScreen = intent.getBooleanExtra(CitrusFlowManager.OVERRIDE_RESULT_SCREEN, false);
         amountText.setTextColor(color);
         amountText.setBackgroundResource(R.drawable.amount_background);
         mProgressDialog = new ProgressDialog(CitrusUIActivity.this);
         showAmount(payAmount);
         if (flow == UIConstants.QUICK_PAY_FLOW) {
             startQuickPayFlow();
-        }else if(flow == UIConstants.WALLET_FLOW){
+        } else if (flow == UIConstants.WALLET_FLOW) {
             startWalletFlow();
         }
-        TypedValue typedValue_primary = new  TypedValue();
+        TypedValue typedValue_primary = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue_primary, true);
-        final  int primaryColor = typedValue_primary.data;
+        final int primaryColor = typedValue_primary.data;
         String colorPrimary = String.format("#%06X", (primaryColor));
 
-        TypedValue typedValue_dark = new  TypedValue();
+        TypedValue typedValue_dark = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue_dark, true);
-        final  int darkColor = typedValue_dark.data;
+        final int darkColor = typedValue_dark.data;
         String colorDark = String.format("#%06X", (darkColor));
 
-        TypedValue typedValue_text = new  TypedValue();
+        TypedValue typedValue_text = new TypedValue();
         context.getTheme().resolveAttribute(UIConstants.actionBarItemColor, typedValue_text, true);
-        final  int textColor = typedValue_dark.data;
+        final int textColor = typedValue_dark.data;
         String colorText = String.format("#%06X", (textColor));
 
         CitrusConfig citrusConfig = CitrusConfig.getInstance();
         citrusConfig.setColorPrimary(colorPrimary);
         citrusConfig.setColorPrimaryDark(colorDark);
         citrusConfig.setTextColorPrimary(colorText);
-
     }
 
 
@@ -137,7 +139,7 @@ public class CitrusUIActivity extends BaseActivity  {
 
     private void startQuickPayFlow() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, QuickPayFragment.newInstance(email,mobile, payAmount)).addToBackStack
+        fragmentManager.beginTransaction().replace(R.id.container, QuickPayFragment.newInstance(email, mobile, payAmount)).addToBackStack
                 (null).commit();
         screenStack.add(UIConstants.SCREEN_SHOPPING);
 //        setActionBarTitle(UIConstants.SCREEN_SHOPPING);
@@ -147,7 +149,7 @@ public class CitrusUIActivity extends BaseActivity  {
 
     @Override
     public void onWalletTransactionComplete(ResultModel resultModel) {
-        setDataToSendBackToParentActivity(new Intent().putExtra(ResultFragment.ARG_RESULT,resultModel));
+        setDataToSendBackToParentActivity(new Intent().putExtra(ResultFragment.ARG_RESULT, resultModel));
         Utils.getBalance(context);
         processAndShowResult(resultModel);
     }
@@ -157,38 +159,40 @@ public class CitrusUIActivity extends BaseActivity  {
         return R.layout.activity_citrus_ui;
     }
 
-    public String getCustomerEmail(){
+    public String getCustomerEmail() {
         return email;
     }
-    public String getCustomerMobile(){
+
+    public String getCustomerMobile() {
         return mobile;
     }
 
     public void setDataToSendBackToParentActivity(Intent data) {
-        context.setResult(RESULT_OK,data);
+        context.setResult(RESULT_OK, data);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK) {
             TransactionResponse transactionResponse = data.getParcelableExtra(Constants.INTENT_EXTRA_TRANSACTION_RESPONSE);
-            context.setResult(RESULT_OK,data);
+            context.setResult(RESULT_OK, data);
             processAndShowResult(new ResultModel(null, transactionResponse));
-        } else if(requestCode == UIConstants.REQ_CODE_LOGIN){
+        } else if (requestCode == UIConstants.REQ_CODE_LOGIN) {
             if (resultCode == RESULT_OK) {
-                Logger.d(TAG+" Login successful");
+                Logger.d(TAG + " Login successful");
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container,new WalletScreenFragment()).addToBackStack
+                fragmentManager.beginTransaction().replace(R.id.container, new WalletScreenFragment()).addToBackStack
                         (null).commit();
                 screenStack.add(UIConstants.SCREEN_WALLET);
                 setActionBarTitle(UIConstants.SCREEN_WALLET);
-            }else{
+            } else {
                 finish();
             }
         }
-        if(requestCode == Constants.REQUEST_CODE_PAYMENT) { // Even though its failure send data
-        // back
-            context.setResult(RESULT_OK,data);
+        if (requestCode == Constants.REQUEST_CODE_PAYMENT) { // Even though its failure send data
+            // back
+            context.setResult(RESULT_OK, data);
         }
     }
 
@@ -197,15 +201,15 @@ public class CitrusUIActivity extends BaseActivity  {
                 || screenStack.get(screenStack.size() - 1) != UIConstants.SCREEN_WALLET) {
             if (!screenStack.isEmpty()) {
                 if (screenStack.size() > 1) {
-                    Logger.d(TAG+" Screen Size = " + screenStack.size());
+                    Logger.d(TAG + " Screen Size = " + screenStack.size());
                     for (int i = screenStack.size(); i > 1; i--) {
                         onBackPressed();
                     }
-                }else{
-                    Logger.d(TAG+" Screen Size = " + screenStack.size());
+                } else {
+                    Logger.d(TAG + " Screen Size = " + screenStack.size());
                 }
             }
-        }else{
+        } else {
 
         }
         if (!resultModel.isWithdraw()) {
@@ -213,12 +217,12 @@ public class CitrusUIActivity extends BaseActivity  {
 
                 showResult(resultModel.getTransactionResponse().getTransactionStatus() ==
                         TransactionResponse
-                        .TransactionStatus.SUCCESSFUL, resultModel);
+                                .TransactionStatus.SUCCESSFUL, resultModel);
 
-            }else if(resultModel.getError() != null){
-                showResult(false,resultModel);
+            } else if (resultModel.getError() != null) {
+                showResult(false, resultModel);
             }
-        }else{
+        } else {
             if (resultModel.getPaymentResponse() != null) {
 
                 showResult(true, resultModel);
@@ -226,41 +230,43 @@ public class CitrusUIActivity extends BaseActivity  {
             }
         }
     }
+
     @Override
-    public void showAmount(String amount){
+    public void showAmount(String amount) {
         amountText.setVisibility(View.VISIBLE);
         balanceContainer.setVisibility(View.GONE);
         if (!TextUtils.isEmpty(amount)) {
             if (amount.equals("0")) {
                 amountText.setVisibility(View.GONE);
-            }else{
-                amountText.setText(getString(R.string.rs)+" "+ amount);
+            } else {
+                amountText.setText(getString(R.string.rs) + " " + amount);
             }
-        }else{
+        } else {
 
             if (!TextUtils.isEmpty(payAmount)) {
                 if (payAmount.equals("0")) {
                     amountText.setVisibility(View.GONE);
-                }else{
-                    amountText.setText(getString(R.string.rs)+" "+ payAmount);
+                } else {
+                    amountText.setText(getString(R.string.rs) + " " + payAmount);
                 }
-            }else{
+            } else {
                 amountText.setVisibility(View.GONE);
             }
         }
     }
+
     @Override
-    public void showWalletBalance(String amount){
+    public void showWalletBalance(String amount) {
         if (!TextUtils.isEmpty(amount)) {
             amountText.setVisibility(View.GONE);
             balanceAmount = amount;
             balanceAmountText.setText(getString(R.string.rs) + " " + amount);
             balanceContainer.setVisibility(View.VISIBLE);
-        }else{
-            if(!TextUtils.isEmpty(balanceAmount)){
+        } else {
+            if (!TextUtils.isEmpty(balanceAmount)) {
                 balanceAmountText.setText(getString(R.string.rs) + " " + balanceAmount);
                 balanceContainer.setVisibility(View.VISIBLE);
-            }else{
+            } else {
 
                 balanceContainer.setVisibility(View.GONE);
             }
@@ -269,7 +275,7 @@ public class CitrusUIActivity extends BaseActivity  {
 
     @Override
     public void toggleAmountVisibility(int visibility) {
-        if (amountText!=null) {
+        if (amountText != null) {
             amountText.setVisibility(visibility);
         }
     }
@@ -279,42 +285,44 @@ public class CitrusUIActivity extends BaseActivity  {
     }
 
 
-
-    private void showResult(boolean result,ResultModel resultModel){
-        if(screenStack.get(screenStack.size()-1) == UIConstants.SCREEN_CVV){
+    private void showResult(boolean result, final ResultModel resultModel) {
+        if (screenStack.get(screenStack.size() - 1) == UIConstants.SCREEN_CVV) {
             animateActionbarColor(AnimationType.ANIM_REVERSE);
         }
 //        screenStack.add(UIConstants.SCREEN_RESULT);
 //        setActionBarTitle(UIConstants.SCREEN_RESULT);
-        if(result){
+        if (result) {
             payAmount = "0";
             showAmount(payAmount);
             setSpannableTitle(getString(R.string.text_all_done));
-        }else{
+        } else {
             setSpannableTitle(getString(R.string.text_error));
         }
-        navigateTo(ResultFragment.newInstance(result, resultModel),UIConstants.SCREEN_RESULT);
+        if (isOverrideResultScreen) {
+            finish();
+        } else {
+            navigateTo(ResultFragment.newInstance(result, resultModel), UIConstants.SCREEN_RESULT);
+        }
     }
 
 
-
     @Override
-    public void makePayment(PaymentOption paymentOption){
-        CitrusUser citrusUser = new CitrusUser(email,mobile);
+    public void makePayment(PaymentOption paymentOption) {
+        CitrusUser citrusUser = new CitrusUser(email, mobile);
         Amount amount = new Amount(payAmount);
         try {
-            PaymentType paymentType = new PaymentType.PGPayment(amount, CitrusFlowManager.billGenerator,paymentOption,citrusUser);
+            PaymentType paymentType = new PaymentType.PGPayment(amount, CitrusFlowManager.billGenerator, paymentOption, citrusUser);
             Intent intent = new Intent(this, com.citrus.sdk.CitrusActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_PAYMENT_TYPE, paymentType);
             startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
         } catch (CitrusException e) {
-            Log.e(TAG,"CitrusException"+e.getMessage());
+            Log.e(TAG, "CitrusException" + e.getMessage());
         }
     }
 
     @Override
     public void withdrawMoney(CashoutInfo cashoutInfo) {
-        if(cashoutInfo!=null){
+        if (cashoutInfo != null) {
             showProgressDialog(false, "Requesting...");
             CitrusClient.getInstance(CitrusUIActivity.this).cashout(cashoutInfo, new Callback<PaymentResponse>() {
 
@@ -330,35 +338,36 @@ public class CitrusUIActivity extends BaseActivity  {
                 @Override
                 public void error(CitrusError error) {
                     dismissProgressDialog();
-                    Snackbar.make(findViewById(R.id.container),"error "+error.getMessage(),Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.container), "error " + error.getMessage(), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    public void makePayment(PaymentOption paymentOption,int requestCode){
-        CitrusUser citrusUser = new CitrusUser(email,mobile);
+    public void makePayment(PaymentOption paymentOption, int requestCode) {
+        CitrusUser citrusUser = new CitrusUser(email, mobile);
         Amount amount = new Amount(payAmount);
         try {
-            PaymentType paymentType = new PaymentType.PGPayment(amount, CitrusFlowManager.billGenerator,paymentOption,citrusUser);
+            PaymentType paymentType = new PaymentType.PGPayment(amount, CitrusFlowManager.billGenerator, paymentOption, citrusUser);
             Intent intent = new Intent(this, com.citrus.sdk.CitrusActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_PAYMENT_TYPE, paymentType);
             startActivityForResult(intent, requestCode);
         } catch (CitrusException e) {
-            Log.e(TAG,"CitrusException"+e.getMessage());
+            Log.e(TAG, "CitrusException" + e.getMessage());
         }
     }
+
     @Override
     public void makeCardPayment(CardOption cardOption) {
-        if(cardOption instanceof DebitCardOption){
-            Logger.d(TAG+" is Debit card");
-            DebitCardOption debitCardOption = (DebitCardOption)cardOption;
+        if (cardOption instanceof DebitCardOption) {
+            Logger.d(TAG + " is Debit card");
+            DebitCardOption debitCardOption = (DebitCardOption) cardOption;
             makePayment(debitCardOption);
 
 
-        }else if (cardOption instanceof CreditCardOption){
-            Logger.d(TAG+" is Credit card");
-            CreditCardOption creditCardOption = (CreditCardOption)cardOption;
+        } else if (cardOption instanceof CreditCardOption) {
+            Logger.d(TAG + " is Credit card");
+            CreditCardOption creditCardOption = (CreditCardOption) cardOption;
             makePayment(creditCardOption);
 
         }

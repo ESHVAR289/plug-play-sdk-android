@@ -27,7 +27,7 @@ public class CustomDetailsActivity extends BaseActivity {
                 if(validateDetails()){
                     String mobile = mobileEt.getText().toString().trim();
                     String email = emailEt.getText().toString().trim();
-                    CitrusFlowManager.startShoppingFlow(CustomDetailsActivity.this, email, mobile, "5");
+                    CitrusFlowManager.startShoppingFlow(CustomDetailsActivity.this, email, mobile, "5",false);
                 }
             }
         });

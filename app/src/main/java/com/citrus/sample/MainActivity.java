@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.citrus.sdk.Constants;
 import com.citrus.sdk.Environment;
@@ -19,6 +20,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity {
 
+
     public static final String returnUrlLoadMoney = "https://salty-plateau-1529.herokuapp" +
             ".com/redirectUrlLoadCash.php";
     public static final String sandboxBillGeneratorURL = "https://salty-plateau-1529.herokuapp" +
@@ -29,14 +31,14 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!BuildConfig.DEBUG) {
-        Fabric.with(this, new Crashlytics());
+            Fabric.with(this, new Crashlytics());
         }
         setupCitrusConfigs();
         findViewById(R.id.quick_pay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CitrusFlowManager.startShoppingFlow(MainActivity.this,
-                        "developercitrus@mailinator.com", "9769507476", "5");
+                        "developercitrus@mailinator.com", "9769507476", "5", false);
 //                CitrusFlowManager.startShoppingFlow(MainActivity.this, "akshay@leftshift.io",
 //                        "8605535811", "50");
 //                CitrusFlowManager.startShoppingFlow(MainActivity.this, "kaul.akshay17@gmail
@@ -60,14 +62,15 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 CitrusFlowManager.startShoppingFlowStyle(MainActivity.this,
-                        "developercitrus@mailinator.com", "9769507476", "5", R.style.AppTheme_pink);
+                        "developercitrus@mailinator.com", "9769507476", "5", R.style.AppTheme_pink, true);
+                Toast.makeText(MainActivity.this, "Result Screen will Override", Toast.LENGTH_SHORT).show();
             }
         });
         findViewById(R.id.blue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CitrusFlowManager.startShoppingFlowStyle(MainActivity.this,
-                        "developercitrus@mailinator.com", "9769507476", "5", R.style.AppTheme_blue);
+                        "developercitrus@mailinator.com", "9769507476", "5", R.style.AppTheme_blue, false);
             }
         });
         findViewById(R.id.green).setOnClickListener(new View.OnClickListener() {
@@ -75,7 +78,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 CitrusFlowManager.startShoppingFlowStyle(MainActivity.this,
                         "developercitrus@mailinator.com", "9769507476", "5", R.style
-                                .AppTheme_Green);
+                                .AppTheme_Green, false);
             }
         });
         findViewById(R.id.purple).setOnClickListener(new View.OnClickListener() {
@@ -83,7 +86,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 CitrusFlowManager.startShoppingFlowStyle(MainActivity.this,
                         "developercitrus@mailinator.com", "9769507476", "5", R.style
-                                .AppTheme_purple);
+                                .AppTheme_purple, false);
             }
         });
         findViewById(R.id.logout_button).setOnClickListener(new View.OnClickListener() {
@@ -102,6 +105,7 @@ public class MainActivity extends BaseActivity {
                 returnUrlLoadMoney);
     }
 
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_main;
@@ -117,25 +121,26 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("MainActivity","request code " + requestCode + " resultcode " + resultCode);
-        if(requestCode == Constants.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data !=
+        Log.d("MainActivity", "request code " + requestCode + " resultcode " + resultCode);
+        if (requestCode == Constants.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data !=
                 null) {
             // You will get data here if transaction flow is started through pay options other than wallet
             TransactionResponse transactionResponse = data.getParcelableExtra(Constants
                     .INTENT_EXTRA_TRANSACTION_RESPONSE);
             // You will get data here if transaction flow is started through wallet
             ResultModel resultModel = data.getParcelableExtra(ResultFragment.ARG_RESULT);
-
             // Check which object is non-null
-            if(transactionResponse != null && transactionResponse.getJsonResponse() != null) {
+            if (transactionResponse != null && transactionResponse.getJsonResponse() != null) {
                 // Decide what to do with this data
                 Log.d(TAG, "transaction response" + transactionResponse.getJsonResponse());
-            } else if(resultModel != null && resultModel.getTransactionResponse() != null){
+            } else if (resultModel != null && resultModel.getTransactionResponse() != null) {
                 // Decide what to do with this data
                 Log.d(TAG, "result response" + resultModel.getTransactionResponse().getTransactionId());
+                Log.d(TAG, "result response Json" + resultModel.getTransactionResponse().getJsonResponse());
             } else {
                 Log.d(TAG, "Both objects are null!");
             }
         }
     }
+
 }

@@ -17,8 +17,6 @@ import com.citrus.sdk.response.CitrusResponse;
 import com.citrus.sdk.ui.R;
 import com.citrus.sdk.ui.activities.CitrusUIActivity;
 
-import java.util.logging.Logger;
-
 /**
  * Created by akshaykoul on 5/28/15.
  */
@@ -30,36 +28,36 @@ public class CitrusFlowManager {
     public static final String KEY_FLOW = "key_flow";
     public static final String KEY_AMOUNT = "key_amount";
     public static final String KEY_STYLE = "key_style";
+    public static final String OVERRIDE_RESULT_SCREEN = "override_result_screen";
     public static String billGenerator = "";
     public static String returnURL = "";
+
     /**
      * Start the shopping flow with style parameter.
      *
-     * @param context context of your activity.
-     * @param email   users Email.
-     * @param phone   users phoneNo.
-     * @param amount  amount to be paid.
-     * @param style   add custom Style to the flow.
+     * @param context                context of your activity.
+     * @param email                  users Email.
+     * @param phone                  users phoneNo.
+     * @param amount                 amount to be paid.
+     * @param style                  add custom Style to the flow.
+     * @param isOverrideResultScreen flag to override ResultScreen
      */
     public static void startShoppingFlowStyle(Context context, String email, String phone, String
-            amount, int style) {
+            amount, int style, boolean isOverrideResultScreen) {
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(context, context.getString(R.string.err_email_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if(!Utils.isValidEmail(email)){
+        } else if (!Utils.isValidEmail(email)) {
             Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(phone)) {
+        } else if (TextUtils.isEmpty(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (!Utils.isValidPhone(phone)) {
+        } else if (!Utils.isValidPhone(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
                     .LENGTH_SHORT).show();
-        }  else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
+        } else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
             Toast.makeText(context, context.getString(R.string.err_amount_empty), Toast
                     .LENGTH_SHORT).show();
 
@@ -70,7 +68,8 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_FLOW, UIConstants.QUICK_PAY_FLOW);
             intent.putExtra(KEY_AMOUNT, amount);
             intent.putExtra(KEY_STYLE, style);
-            if(context instanceof Activity) {
+            intent.putExtra(OVERRIDE_RESULT_SCREEN, isOverrideResultScreen);
+            if (context instanceof Activity) {
                 ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
             } else {
                 Log.d(TAG, "Context passed should be activity context");
@@ -82,29 +81,27 @@ public class CitrusFlowManager {
     /**
      * Start the Shopping(Quick pay) flow.
      *
-     * @param context context of your activity.
-     * @param email   users Email.
-     * @param phone   users phoneNo.
-     * @param amount  amount to be paid.
+     * @param context                context of your activity.
+     * @param email                  users Email.
+     * @param phone                  users phoneNo.
+     * @param amount                 amount to be paid.
+     * @param isOverrideResultScreen flag to override ResultScreen
      */
     public static void startShoppingFlow(Context context, String email, String phone, String
-            amount) {
+            amount, boolean isOverrideResultScreen) {
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(context, context.getString(R.string.err_email_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if(!Utils.isValidEmail(email)){
+        } else if (!Utils.isValidEmail(email)) {
             Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(phone)) {
+        } else if (TextUtils.isEmpty(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (!Utils.isValidPhone(phone)) {
+        } else if (!Utils.isValidPhone(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
                     .LENGTH_SHORT).show();
-        }  else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
+        } else if (TextUtils.isEmpty(amount) || Double.parseDouble(amount) == 0) {
             Toast.makeText(context, context.getString(R.string.err_amount_empty), Toast
                     .LENGTH_SHORT).show();
 
@@ -114,7 +111,8 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_MOBILE, phone);
             intent.putExtra(KEY_FLOW, UIConstants.QUICK_PAY_FLOW);
             intent.putExtra(KEY_AMOUNT, amount);
-            if(context instanceof Activity) {
+            intent.putExtra(OVERRIDE_RESULT_SCREEN, isOverrideResultScreen);
+            if (context instanceof Activity) {
                 ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
             } else {
                 Log.d(TAG, "Context passed should be activity context");
@@ -134,16 +132,13 @@ public class CitrusFlowManager {
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(context, context.getString(R.string.err_email_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if(!Utils.isValidEmail(email)){
+        } else if (!Utils.isValidEmail(email)) {
             Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(phone)) {
+        } else if (TextUtils.isEmpty(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (!Utils.isValidPhone(phone)) {
+        } else if (!Utils.isValidPhone(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
                     .LENGTH_SHORT).show();
         } else if (context != null) {
@@ -151,27 +146,25 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_EMAIL, email);
             intent.putExtra(KEY_MOBILE, phone);
             intent.putExtra(KEY_FLOW, UIConstants.WALLET_FLOW);
-            if(context instanceof Activity) {
+            if (context instanceof Activity) {
                 ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
             } else {
                 Log.d(TAG, "Context passed should be activity context");
             }
         }
     }
+
     public static void startWalletFlowStyle(Context context, String email, String phone, int style) {
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(context, context.getString(R.string.err_email_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if(!Utils.isValidEmail(email)){
+        } else if (!Utils.isValidEmail(email)) {
             Toast.makeText(context, context.getString(R.string.email_not_valid), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(phone)) {
+        } else if (TextUtils.isEmpty(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_empty), Toast
                     .LENGTH_SHORT).show();
-        }
-        else if (!Utils.isValidPhone(phone)) {
+        } else if (!Utils.isValidPhone(phone)) {
             Toast.makeText(context, context.getString(R.string.err_phone_not_valid), Toast
                     .LENGTH_SHORT).show();
         } else if (context != null) {
@@ -180,7 +173,7 @@ public class CitrusFlowManager {
             intent.putExtra(KEY_MOBILE, phone);
             intent.putExtra(KEY_STYLE, style);
             intent.putExtra(KEY_FLOW, UIConstants.WALLET_FLOW);
-            if(context instanceof Activity) {
+            if (context instanceof Activity) {
                 ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PAYMENT);
             } else {
                 Log.d(TAG, "Context passed should be activity context");
@@ -209,7 +202,7 @@ public class CitrusFlowManager {
     public static void initCitrusConfig(String signupId, String signupSecret,
                                         String signinId, String signinSecret, int
                                                 actionBarItemColor, Context context, Environment
-                                                environment,String vanity, String billGenerator, String
+                                                environment, String vanity, String billGenerator, String
                                                 returnURL) {
 //        Config.setEnv(environment); //replace it with "production" when you are ready
 
@@ -223,7 +216,7 @@ public class CitrusFlowManager {
         CitrusClient citrusClient;
         citrusClient = CitrusClient.getInstance(context);
         citrusClient.enableLog(true);
-        citrusClient.init(signupId, signupSecret, signinId, signinSecret, vanity , environment);
+        citrusClient.init(signupId, signupSecret, signinId, signinSecret, vanity, environment);
         CitrusFlowManager.billGenerator = billGenerator;
         CitrusFlowManager.returnURL = returnURL;
     }
