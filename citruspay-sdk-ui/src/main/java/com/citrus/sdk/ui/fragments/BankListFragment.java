@@ -82,22 +82,42 @@ public class BankListFragment extends Fragment {
 
     private void getMerchantPaymentOptions() {
         mListener.showProgressDialog(false, getString(R.string.text_getting_bank_list));
-        CitrusClient.getInstance(getActivity()).getMerchantPaymentOptions(new Callback<MerchantPaymentOption>() {
+        if (transactionType.equals(UIConstants.TRANS_QUICK_PAY)) {
+            CitrusClient.getInstance(getActivity()).getMerchantPaymentOptions(new Callback<MerchantPaymentOption>() {
 
-            @Override
-            public void success(MerchantPaymentOption merchantPaymentOption) {
-                mListener.dismissProgressDialog();
-                Logger.d(TAG + " got payment Options");
-                netbankingOptionList = merchantPaymentOption.getNetbankingOptionList();
-                setUpBankList();
-            }
+                @Override
+                public void success(MerchantPaymentOption merchantPaymentOption) {
+                    mListener.dismissProgressDialog();
+                    Logger.d(TAG + " got payment Options");
+                    netbankingOptionList = merchantPaymentOption.getNetbankingOptionList();
+                    setUpBankList();
+                }
 
-            @Override
-            public void error(CitrusError error) {
-                mListener.dismissProgressDialog();
-                Logger.d(TAG + " Got error " + error.getMessage());
-            }
-        });
+                @Override
+                public void error(CitrusError error) {
+                    mListener.dismissProgressDialog();
+                    Logger.d(TAG + " Got error " + error.getMessage());
+                }
+            });
+        } else {
+            CitrusClient.getInstance(getActivity()).getLoadMoneyPaymentOptions(new Callback<MerchantPaymentOption>() {
+
+                @Override
+                public void success(MerchantPaymentOption merchantPaymentOption) {
+                    mListener.dismissProgressDialog();
+                    Logger.d(TAG + " got payment Options");
+                    netbankingOptionList = merchantPaymentOption.getNetbankingOptionList();
+                    setUpBankList();
+                }
+
+                @Override
+                public void error(CitrusError error) {
+                    mListener.dismissProgressDialog();
+                    Logger.d(TAG + " Got error " + error.getMessage());
+                }
+            });
+        }
+
     }
 
     private void setUpBankList() {
@@ -173,21 +193,21 @@ public class BankListFragment extends Fragment {
                     Callback<TransactionResponse>() {
 
 
-                @Override
-                public void success(TransactionResponse transactionResponse) {
-                    Logger.d(TAG + " Success wallet Load" + transactionResponse
-                            .getMessage());
-                    loadMoneyComplete = true;
-                    loadMoneyModel = new ResultModel(null, transactionResponse);
-                }
+                        @Override
+                        public void success(TransactionResponse transactionResponse) {
+                            Logger.d(TAG + " Success wallet Load" + transactionResponse
+                                    .getMessage());
+                            loadMoneyComplete = true;
+                            loadMoneyModel = new ResultModel(null, transactionResponse);
+                        }
 
-                @Override
-                public void error(CitrusError error) {
-                    Logger.d(TAG + " Could not process wallet Load" + error.getMessage());
-                    loadMoneyComplete = true;
-                    loadMoneyModel = new ResultModel(error, null);
-                }
-            });
+                        @Override
+                        public void error(CitrusError error) {
+                            Logger.d(TAG + " Could not process wallet Load" + error.getMessage());
+                            loadMoneyComplete = true;
+                            loadMoneyModel = new ResultModel(error, null);
+                        }
+                    });
         } catch (CitrusException e) {
             Logger.e(TAG + " CitrusException" + e.getMessage());
         }
