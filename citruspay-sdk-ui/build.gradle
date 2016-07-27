@@ -33,7 +33,7 @@ dependencies {
     /* ********************************************
      **** Retrofit 1.9 or Not using retrofit ******
      **********************************************/
-    compile 'com.citrus.sdk:payment-sdk:3.4.3:retrofitoldRelease@aar'
+    compile 'com.citrus.sdk:payment-sdk:3.4.4.1:retrofitoldRelease@aar'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
