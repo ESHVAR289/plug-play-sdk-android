@@ -198,12 +198,13 @@ public class CitrusFlowManager {
      *                           or Environment.PRODUCTION
      * @param billGenerator      The bill generator URL merchant needs to Host online.
      * @param returnURL          The return URL for updating Wallet transactions needed to
+     * @param returnURL          The return URL for updating Wallet transactions needed to
      */
     public static void initCitrusConfig(String signupId, String signupSecret,
                                         String signinId, String signinSecret, int
                                                 actionBarItemColor, Context context, Environment
                                                 environment, String vanity, String billGenerator, String
-                                                returnURL) {
+                                                returnURL,boolean enableLogs) {
 //        Config.setEnv(environment); //replace it with "production" when you are ready
 
         /*Replace following details with oauth details provided to you*/
@@ -215,7 +216,7 @@ public class CitrusFlowManager {
         UIConstants.actionBarItemColor = actionBarItemColor;
         CitrusClient citrusClient;
         citrusClient = CitrusClient.getInstance(context);
-        citrusClient.enableLog(true);
+        citrusClient.enableLog(enableLogs);
         citrusClient.init(signupId, signupSecret, signinId, signinSecret, vanity, environment);
         CitrusFlowManager.billGenerator = billGenerator;
         CitrusFlowManager.returnURL = returnURL;

@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity {
                 appEnvironment.getSignUpSecret(), appEnvironment.getSignInId(),
                 appEnvironment.getSignInSecret(), ContextCompat.getColor(this, R.color.white),
                 MainActivity.this, appEnvironment.getEnvironment(), appEnvironment.getVanity(), appEnvironment.getBillUrl(),
-                returnUrlLoadMoney);
+                returnUrlLoadMoney,true);
     }
 
 
