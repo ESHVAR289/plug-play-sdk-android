@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Citrus sample</string>
+    <string name="app_name">Plug &amp; Play SDK - Sample</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,4 +8,6 @@
     <string name="add_custom">Add Custom Details</string>
     <string name="text_start_wallet">Start wallet flow</string>
     <string name="log_out_user">Log out user</string>
+    <string name="env_sandbox">Sandbox</string>
+    <string name="env_prod">Production</string>
 </resources>

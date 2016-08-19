@@ -42,14 +42,4 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-//    public void setSpannableTitle(String title, ActionBar actionBar) {
-//        SpannableString s = new SpannableString(title);
-//        s.setSpan(new TypefaceSpan(this, "Raleway-SemiBold.ttf"), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//
-//        s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primary_dark)),0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//// Update the action bar title with the TypefaceSpan instance
-//        actionBar.setTitle(s);
-//    }
 }
