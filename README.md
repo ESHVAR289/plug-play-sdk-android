@@ -1,5 +1,5 @@
 
-# Plug And Play SDK Integration
+# Plug & Play SDK Integration
 
 Citrus SDK UI is an android Library project for easy integration of citrus pay library to your project. It provides all the screens necessary for making a transaction via citrus pay.
 
@@ -12,6 +12,7 @@ Citrus SDK UI is an android Library project for easy integration of citrus pay l
 *     Pay Using Citrus Cash - user can make a payment using Citrus Cash account if he has sufficient amount for payment. 
 *     Load Money – money can be loaded to user’s account using CC/DC/NB option. 
 *     Withdraw money from wallet.
+
 
 ## Prerequisite
 ### You must already have installed and configured:
@@ -45,15 +46,18 @@ A demonstration on navigating to the necessary screens to get the details are as
   ![Demo Image]( https://cldup.com/pG7aGwfHDh.gif)
 
 ## SDK initialization
+Add below Compile dependencies to your project's level **build.gradle**
+```javascript
+  //Dependency For Citrus Plug & Play SDK
+  compile('com.citruspay.sdk:plug-n-play-sdk:1.1') {
+        transitive = true;
+        exclude module: 'payment-sdk'
+    }
+  //Dependency For Citrus Core SDK  
+  compile 'com.citruspay.sdk:payment-sdk:4.0.0' 
+```
 
-Integrate the Citrus SDK in your project by doing the following steps:
-
-   * Import Module : citruspay-sdk-ui from the file downloaded from [github](https://github.com/citruspay/plug-play-sdk-android)
-   * Add citruspay-sdk-ui module to dependencies
-
-Please refer below demonstration video for easier initialization.
-
-[![Plug-And-Play SDK Initialization demo](http://i.imgur.com/VkOQlyb.png?1)](https://player.vimeo.com/video/140033977 "Plug-And-Play SDK Initialization - Click to Watch!")
+## SDK Configuration
 
 Use **CitrusFlowManager.initCitrusConfig()** method before starting the payment flow.
 
@@ -63,7 +67,7 @@ Use **CitrusFlowManager.initCitrusConfig()** method before starting the payment 
    String signinId, String signinSecret,
    int actionBarItemColor, Context context,
    Environment environment,String vanity
-   String billGenerator,String returnURL)
+   String billGenerator,String returnURL,boolean enableLogs)
 ```
 you can get **Signup Id**, **Signup Secret**, **Signin Id**, **Signin** Secret as described earlier in the document. 
    
@@ -73,6 +77,7 @@ you can get **Signup Id**, **Signup Secret**, **Signin Id**, **Signin** Secret a
 * **environment** - can be Environment.PRODUCTION (for production) Environment.SANDBOX(for sandbox). 
 * **billGenerator** - Url of the Bill Generator Hosted on your server.
 * **returnURL** - Redirect URL page hosted on your server.
+* **enableLogs** - Flag to enable/disable core SDK logs.
 
 **Sample:**
 ```javascript
@@ -80,35 +85,55 @@ you can get **Signup Id**, **Signup Secret**, **Signin Id**, **Signin** Secret a
    "c78ec84e389814a05d3ae46546d16d2e", "test-signin",
    "52f7e15efd4208cf5345dd554443fd99",
     getResources().getColor(R.color.white),YourActivity.this,
-    Environment.SANDBOX,”prepaid”, sandboxBillGeneratorURL , sandboxReturnURL);
+    Environment.SANDBOX,”prepaid”, sandboxBillGeneratorURL , sandboxReturnURL , false);
 ```
 
-Before starting the Shopping flow or Wallet flow , you need to Add the following Activities in the your AndroidManifest
+## Start Shopping Flow
 
-**1. CitrusUIActivity **  
-**2. LoginFlowActivity**
+**Use CitrusFlowManager.startShoppingFlow() method before starting the payment flow.**
 
-**Like this:**
-```xml
-  <application
-      ...
-      <activity
-          android:name="com.citrus.sdk.ui.activities.CitrusUIActivity"
-          android:label="@string/title_activity_citrus"
-          android:theme="@style/CitrusAppTheme"
-          android:screenOrientation="portrait">
-      </activity>
-
-      <activity
-          android:name="com.citrus.sdk.ui.activities.LoginFlowActivity"
-          android:label="@string/title_activity_login_flow"
-          android:theme="@style/CitrusAppTheme"
-          android:screenOrientation="portrait">
-      </activity> 
-  ...
-  </application>
+**Method:**
+```javascript
+  startShoppingFlow(Context context, String email, String phone,           
+                  String amount)
 ```
-The theme fore these Activities are customizable but you have to add @style/CitrusAppTheme as a parent of your custom theme.
+
+*  **context** - context of your activity.
+*  **email** - users Email.
+*  **phone** - users phoneNo.
+*  **amount** - amount to be paid.
+*  **overrideResultScreen** - flag to override the ResultScreen.  
+
+**Sample:**
+
+```javascript
+
+  CitrusFlowManager.startShoppingFlow(YourActivity.this,       
+    "developercitrus@mailinator.com", "8424019644", "5");
+    
+```
+
+## Start Wallet Flow
+
+**Use CitrusFlowManager.startShoppingFlow() method before starting the wallet flow.**
+
+**Method:**
+```javascript
+  startWalletFlow(Context context, String email, String phone)
+```
+* **context** - context of your activity.
+* **email** - users Email.
+* **phone** - users phoneNo.
+
+**Sample :**
+```javascript
+
+  CitrusFlowManager.startWalletFlow(YourActivity.this, 
+        "developercitrus@mailinator.com", "8424019644");
+        
+```
+
+If you want start your flow with custom theme then you need to add **@style/CitrusAppTheme** as a parent of your custom theme
 
 **Like this:**
 ```xml
@@ -129,44 +154,10 @@ The theme fore these Activities are customizable but you have to add @style/Citr
 
 ```
 
-## Start Shopping Flow
-
-**Use CitrusFlowManager.startShoppingFlow() method before starting the payment flow.**
-
-**Method:**
+**Usage of Custom theme**
 ```javascript
-  startShoppingFlow(Context context, String email, String phone,           
-                  String amount)
-```
 
-*  **context** - context of your activity.
-*  **email** - users Email.
-*  **phone** - users phoneNo.
-*  **amount** - amount to be paid.  
-
-**Sample:**
-
-```javascript
-  CitrusFlowManager.startShoppingFlow(YourActivity.this,       
-    "developercitrus@mailinator.com", "8424019644", "5");
-```
-
-## Start Wallet Flow
-
-**Use CitrusFlowManager.startShoppingFlow() method before starting the wallet flow.**
-
-**Method:**
-```javascript
-  startWalletFlow(Context context, String email, String phone)
-```
-* **context** - context of your activity.
-* **email** - users Email.
-* **phone** - users phoneNo.
-
-**Sample :**
-```javascript
-  CitrusFlowManager.startWalletFlow(YourActivity.this, 
-        "developercitrus@mailinator.com", "8424019644");
-```
-
-
+    CitrusFlowManager.startShoppingFlowStyle(MainActivity.this,
+                        dummyEmail, dummyMobile, dummyAmount, R.style.AppTheme_pink, false);
+                        
+```                        
