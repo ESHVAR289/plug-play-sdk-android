@@ -95,7 +95,7 @@ you can get **Signup Id**, **Signup Secret**, **Signin Id**, **Signin** Secret a
 **Method:**
 ```javascript
   startShoppingFlow(Context context, String email, String phone,           
-                  String amount)
+                  String amount,boolean isOverrideResultScreen)
 ```
 
 *  **context** - context of your activity.
@@ -109,7 +109,7 @@ you can get **Signup Id**, **Signup Secret**, **Signin Id**, **Signin** Secret a
 ```javascript
 
   CitrusFlowManager.startShoppingFlow(YourActivity.this,       
-    "developercitrus@mailinator.com", "8424019644", "5");
+    "developercitrus@mailinator.com", "8424019644", "5",false);
     
 ```
 
@@ -127,7 +127,6 @@ you can get **Signup Id**, **Signup Secret**, **Signin Id**, **Signin** Secret a
 
 **Sample :**
 ```javascript
-
   CitrusFlowManager.startWalletFlow(YourActivity.this, 
         "developercitrus@mailinator.com", "8424019644");
         
@@ -156,8 +155,8 @@ If you want start your flow with custom theme then you need to add **@style/Citr
 
 **Usage of Custom theme**
 ```javascript
-
     CitrusFlowManager.startShoppingFlowStyle(MainActivity.this,
                         dummyEmail, dummyMobile, dummyAmount, R.style.AppTheme_pink, false);
-                        
 ```                        
+
+
