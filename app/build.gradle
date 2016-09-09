@@ -36,7 +36,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile('com.citruspay.sdk:plug-n-play-sdk:1.1') {
+    compile('com.citruspay.sdk:plug-n-play-sdk:1.2') {
         transitive = true;
         exclude module: 'payment-sdk'
     }
