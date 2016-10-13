@@ -157,6 +157,8 @@ If you want start your flow with custom theme then you need to add **@style/Citr
 ```javascript
     CitrusFlowManager.startShoppingFlowStyle(MainActivity.this,
                         dummyEmail, dummyMobile, dummyAmount, R.style.AppTheme_pink, false);
-```                        
+```         
+
+* <a href="docs/Progaurd%20changes.md" target="_blank">Progaurd changes</a>(If required)
 
 
