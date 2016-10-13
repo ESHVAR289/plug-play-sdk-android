@@ -159,6 +159,6 @@ If you want start your flow with custom theme then you need to add **@style/Citr
                         dummyEmail, dummyMobile, dummyAmount, R.style.AppTheme_pink, false);
 ```         
 
-* <a href="docs/Progaurd%20changes.md" target="_blank">Progaurd changes</a>(If required)
+* <a href="Progaurd%20changes.md" target="_blank">Progaurd changes</a>(If required)
 
 
