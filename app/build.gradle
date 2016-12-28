@@ -41,7 +41,6 @@ dependencies {
         exclude module: 'payment-sdk'
     }
     compile 'com.citruspay.sdk:payment-sdk:4.0.1'
-    //compile project(':citruspay-sdk-ui')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
