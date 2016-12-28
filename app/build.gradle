@@ -19,6 +19,14 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
 
+    signingConfigs {
+        release {
+            keyAlias 'citrus'
+            keyPassword 'citrus'
+            storeFile file('keystore.jks')
+            storePassword 'citrus'
+        }
+    }
     defaultConfig {
         applicationId "com.citrus.sample"
         minSdkVersion 15
@@ -28,6 +36,11 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
