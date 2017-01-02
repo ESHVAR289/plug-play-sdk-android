@@ -49,7 +49,7 @@ A demonstration on navigating to the necessary screens to get the details are as
 Add below Compile dependencies to your project's level **build.gradle**
 ```javascript
   //Dependency For Citrus Plug & Play SDK
-  compile('com.citruspay.sdk:plug-n-play-sdk:1.2') {
+  compile('com.citruspay.sdk:plug-n-play-sdk:1.3') {
         transitive = true;
         exclude module: 'payment-sdk'
     }
